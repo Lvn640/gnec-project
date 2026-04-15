@@ -1,0 +1,19 @@
+# Secrets
+.env
+*.env
+
+# Large Clinical Data (Too big for GitHub)
+data/*.csv
+data/*.zip
+data/mimic-iv-2.1/
+!data/forensic_gallery.json
+!data/forensic_audit_trail.txt
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.class
+
+# Environment
+venv/
+.venv/

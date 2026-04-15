@@ -1,0 +1,35 @@
+[
+    {
+        "archetype": "SUCCESS",
+        "patient_id": "11093",
+        "hour": 58,
+        "vitals": {
+            "SBP": 87.0,
+            "Resp": 23.0,
+            "Lactate": 1.0
+        },
+        "ground_truth_sepsis": 1
+    },
+    {
+        "archetype": "WATCHDOG_HERO",
+        "patient_id": "17072",
+        "hour": 4,
+        "vitals": {
+            "SBP": 129.0,
+            "Resp": 14.0,
+            "Lactate": 1.0
+        },
+        "ground_truth_sepsis": 0
+    },
+    {
+        "archetype": "SILENT_BREACH",
+        "patient_id": "5462",
+        "hour": 43,
+        "vitals": {
+            "SBP": 108.5,
+            "Resp": 14.5,
+            "Lactate": 4.6
+        },
+        "ground_truth_sepsis": 1
+    }
+]

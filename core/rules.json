@@ -1,0 +1,13 @@
+{
+    "protocol_name": "SEPSIS_WATCHDOG_V1",
+    "version": "1.0.4",
+    "last_signed_by": "CHIEF_MEDICAL_OFFICER",
+    "thresholds": {
+        "qSOFA_breach": 2,
+        "SBP_low": 100,
+        "Resp_high": 22,
+        "Lactate_critical": 2.0
+    },
+    "integrity_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
+
