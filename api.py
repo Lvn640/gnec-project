@@ -98,3 +98,42 @@ async def upload_medical_file(file: UploadFile = File(...)):
         "guard_verified": guard_result,
         "vitals_parsed": parsed_vitals
     }
+
+class ChatRequest(BaseModel):
+    message: str
+    context: str
+
+@app.post("/api/chat")
+async def chat_with_ai(req: ChatRequest):
+    if not os.environ.get("GROQ_API_KEY"):
+        raise HTTPException(status_code=500, detail="GROQ_API_KEY not configured")
+    
+    client = Groq()
+    
+    system_prompt = f"""
+You are Diagnostyx AI, a highly advanced clinical assistant operating under a deterministic Python watchdog (Guard AI).
+You must analyze the patient's medical query based on the following mock medical history:
+- Patient: Maria Gonzalez, 52 y/o.
+- Chronic Conditions: Hypertension, Type 2 Diabetes.
+- Family History: Cardiomyopathy (Father), Type 2 Diabetes (Mother).
+- Allergies: Penicillin, Sulfa drugs (Cross-reactivity risk with Cephalosporins).
+- Current Meds: Metformin 500mg (2x daily), Lisinopril 10mg (1x daily), Atorvastatin 20mg (1x daily).
+- Recent Reports: 
+  - [1] ECG Report (Apr 2026): Elevated resting heart rate of 92 bpm, irregular patterns.
+  - [2] HbA1c Test (Mar 2026): 7.2%.
+  - [3] Lipid Panel (Feb 2026): Normal ranges on Atorvastatin.
+- Vitals: BP 138/88, HR 92 bpm, Temp 37.1°C.
+
+When answering, ALWAYS act as an Explainable AI (XAI). Cite the data you use using bracketed numbers (e.g. [1], [2]) that correspond to specific reports or data points from the list above. Keep answers concise, empathetic, and professional.
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": req.message}
+        ],
+        temperature=0.2
+    )
+    
+    return {"reply": response.choices[0].message.content}
